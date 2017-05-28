@@ -19,7 +19,7 @@ public class Speed : Script
 
 
 
-        Interval = 1000; // how many times tick event is run. 1000 = 1 sec.
+        Interval = 1000; // time interval
 
       
 
