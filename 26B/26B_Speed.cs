@@ -27,7 +27,7 @@ public class Speed : Script
 
     void OnTick(object sender, EventArgs e)
     {
-        theCar = player.LastVehicle; // get name of car that the player is trying to enter.
+        theCar = player.LastVehicle; // get name of car that the player is in.
         
 
         if(carReady == true) // check if car is spawned.
