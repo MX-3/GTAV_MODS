@@ -6,7 +6,7 @@ using System.Windows.Forms;
 public class Speed : Script
 
 {
-    Boolean carReady = false; // check if car is spawned.
+    Boolean carReady = false; // prepare car for bomb.
     Boolean bombReady = false; // check if bomb has been activated.
     Ped player = Game.Player.Character; // reference to player's character model.
     Vehicle theCar; // reference to boom car.
