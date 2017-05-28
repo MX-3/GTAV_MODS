@@ -19,7 +19,7 @@ public class Speed : Script
 
 
 
-        Interval = 1000; // time interval
+        Interval = 1000; // time interval.
 
       
 
