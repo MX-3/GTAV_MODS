@@ -62,7 +62,7 @@ public class Speed : Script
     {
        
     
-        if(e.KeyCode == Keys.K) // if key pressed = k, spawn the "boom car".
+        if(e.KeyCode == Keys.K) // if key pressed = k, enable/disable mod.
         {
             
 
