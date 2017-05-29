@@ -10,8 +10,8 @@ public class Speed : Script
     Boolean bombReady = false; // check if bomb has been activated.
     Ped player = Game.Player.Character; // reference to player's character model.
     Vehicle theCar; // reference to boom car.
-    float activationSpeed = 30; // Speed at which the bomb triggers, 30 = roughly 70mph ingame.
-    float detonationSpeed = 28; // Speed at which the bomb detonates. (slightly lower to bypass the *insta-explode on activation* bug.
+    float activationSpeed = 30; // speed at which the bomb triggers, 30 = roughly 70mph ingame.
+    float detonationSpeed = 28; // speed at which the bomb detonates. (slightly lower to bypass the *insta-explode on activation* bug.
 
     public Speed()
     {
@@ -41,14 +41,23 @@ public class Speed : Script
                 {
                     UI.ShowSubtitle("Bomb Armed.");
                     bombReady = true; //activate bomb.
-                    
+                   
+
                 }
 
-                if(theCar.Speed < detonationSpeed && bombReady == true) // if speed below 28 and bomb is ready then kill player. (Below 28 due to an insta-explode bug).
+                else if(theCar.Speed < detonationSpeed && bombReady == true) // if speed below 28 and bomb is ready then kill player. (Below 28 due to an insta-explode bug).
                 {   
                     theCar.Explode();
                     bombReady = false; // deactivate bomb.
                 }
+
+                else if(player.IsJumpingOutOfVehicle == true && bombReady == true) // check to see if player tries to leave the car after bomb has been armed. If the player does try to leave, boom.
+                {
+                    theCar.Explode();
+                    bombReady = false;
+                }
+
+                
 
             }
         }
