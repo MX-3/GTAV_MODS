@@ -6,10 +6,12 @@ using System.Windows.Forms;
 public class Speed : Script
 
 {
-    Boolean carReady = false; // prepare car for bomb.
+    Boolean carReady = false; // check if car is spawned.
     Boolean bombReady = false; // check if bomb has been activated.
     Ped player = Game.Player.Character; // reference to player's character model.
     Vehicle theCar; // reference to boom car.
+    float activationSpeed = 30; // Speed at which the bomb triggers, 30 = roughly 70mph ingame.
+    float detonationSpeed = 28; // Speed at which the bomb detonates. (slightly lower to bypass the *insta-explode on activation* bug.
 
     public Speed()
     {
@@ -19,7 +21,7 @@ public class Speed : Script
 
 
 
-        Interval = 1000; // time interval.
+        Interval = 100; // how many times tick event is run. 1000 = 1 sec.
 
       
 
@@ -27,7 +29,7 @@ public class Speed : Script
 
     void OnTick(object sender, EventArgs e)
     {
-        theCar = player.LastVehicle; // get name of car that the player is in.
+        theCar = player.LastVehicle; // get name of car that the player is trying to enter.
         
 
         if(carReady == true) // check if car is spawned.
@@ -35,14 +37,14 @@ public class Speed : Script
             if (player.IsInVehicle(theCar) == true) // check if player is in the car.
             {
                 
-                if(theCar.Speed > 30 && bombReady == false) // if speed above 30, activate *speed mode* .
+                if(theCar.Speed > activationSpeed && bombReady == false) // if speed above 30, activate *speed mode* .
                 {
                     UI.ShowSubtitle("Bomb Armed.");
                     bombReady = true; //activate bomb.
                     
                 }
 
-                if(theCar.Speed < 28 && bombReady == true) // if speed below 28 and bomb is ready then kill player. (Below 28 due to an insta-explode bug).
+                if(theCar.Speed < detonationSpeed && bombReady == true) // if speed below 28 and bomb is ready then kill player. (Below 28 due to an insta-explode bug).
                 {   
                     theCar.Explode();
                     bombReady = false; // deactivate bomb.
@@ -60,13 +62,13 @@ public class Speed : Script
 
     void OnKeyUp(object sender, KeyEventArgs e)
     {
-       
-    
-        if(e.KeyCode == Keys.K) // if key pressed = k, enable/disable mod.
-        {
-            
 
-            if(carReady == false)
+
+        if (e.KeyCode == Keys.K) // if key pressed = k, spawn the "boom car".
+        {
+
+
+            if (carReady == false)
             {
                 UI.ShowSubtitle("Speed Mode Activated");
                 carReady = true;
@@ -78,6 +80,27 @@ public class Speed : Script
                 carReady = false;
             }
 
+        }
+
+
+            if (e.KeyCode == Keys.J && carReady == true) // if key pressed = j, decrease activation and detonation speed by 5.
+            {
+
+                activationSpeed = activationSpeed -= 5;
+                detonationSpeed = detonationSpeed -= 5;
+                UI.ShowSubtitle("Activation Speed Decreased To: " + (activationSpeed));
+
+
+
+            }
+
+
+        if (e.KeyCode == Keys.L && carReady == true) // if key pressed = l, increase activation and detonation speed by 5.
+        {
+
+            activationSpeed = activationSpeed += 5;
+            detonationSpeed = detonationSpeed += 5;
+            UI.ShowSubtitle("Activation Speed Increased To: " + (activationSpeed));
 
 
 
