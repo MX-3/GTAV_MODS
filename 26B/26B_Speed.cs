@@ -6,7 +6,7 @@ using System.Windows.Forms;
 public class Speed : Script
 
 {
-    Boolean carReady = false; // check if car is spawned.
+    Boolean carReady = false; // prepare car for bomb.
     Boolean bombReady = false; // check if bomb has been activated.
     Ped player = Game.Player.Character; // reference to player's character model.
     Vehicle theCar; // reference to boom car.
@@ -21,15 +21,15 @@ public class Speed : Script
 
 
 
-        Interval = 100; // how many times tick event is run. 1000 = 1 sec.
+        Interval = 100; //// time interval (how quickly the script runs - the lower the value, the faster the bomb reacts).
 
-      
+
 
     }
 
     void OnTick(object sender, EventArgs e)
     {
-        theCar = player.LastVehicle; // get name of car that the player is trying to enter.
+        theCar = player.LastVehicle; // // get name of car that the player is in.
         
 
         if(carReady == true) // check if car is spawned.
@@ -64,7 +64,7 @@ public class Speed : Script
     {
 
 
-        if (e.KeyCode == Keys.K) // if key pressed = k, spawn the "boom car".
+        if (e.KeyCode == Keys.K) // if key pressed = k, enable/disable mod.
         {
 
 
